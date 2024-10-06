@@ -1,0 +1,1 @@
+I wrote this PowerShell (.ps1) script to import the 14 Battleship PBIs. Download the .ps1 file, make suitable edits (e.g. insert your account, email address, token, project names, and tweak the PBI titles, descriptions, or A/C in the functions). Code is provided "as is", but email me (richard@accentient.com) with any questions.
