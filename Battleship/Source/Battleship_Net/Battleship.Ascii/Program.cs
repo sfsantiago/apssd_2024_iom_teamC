@@ -120,23 +120,57 @@ namespace Battleship.Ascii
          InitializeEnemyFleet();
       }
 
-      private static void InitializeMyFleet()
-      {
-         myFleet = GameController.InitializeShips().ToList();
+        private static void InitializeMyFleet()
+        {
+            myFleet = GameController.InitializeShips().ToList();
 
-         Console.WriteLine("Please position your fleet (Game board size is from A to H and 1 to 8) :");
+            Console.WriteLine("Please position your fleet (Game board size is from A to H and 1 to 8) :");
 
-         foreach (var ship in myFleet)
-         {
-            Console.WriteLine();
-            Console.WriteLine("Please enter the positions for the {0} (size: {1})", ship.Name, ship.Size);
-            for (var i = 1; i <= ship.Size; i++)
+            List<string> validations = new List<string>();
+            foreach (var ship in myFleet)
             {
-               Console.WriteLine("Enter position {0} of {1} (i.e A3):", i, ship.Size);
-               ship.AddPosition(Console.ReadLine());
+                Console.WriteLine();
+                Console.WriteLine("Please enter the positions for the {0} (size: {1})", ship.Name, ship.Size);
+                for (var i = 1; i <= ship.Size; i++)
+                {
+                    Console.WriteLine("Enter position {0} of {1} (i.e A3):", i, ship.Size);
+                    validations = new List<string>();
+                    if (ship.TryAddPosition(Console.ReadLine(), out validations)) 
+                    {
+                        foreach (var validation in validations)
+                        {
+                            Console.WriteLine(validation);
+                        }
+                    }
+                    else
+                    {
+                        i -= 1;
+                    }                
+                }
             }
-         }
-      }
+
+            if (GameController.TryValidateOverlap(myFleet, out validations))
+            {
+                foreach (var validation in validations)
+                {
+                    Console.WriteLine(validation);
+                }
+            }
+            if (GameController.TryValidateShipSize(myFleet, out validations))
+            {
+                foreach (var validation in validations)
+                {
+                    Console.WriteLine(validation);
+                }
+            }
+            if (GameController.TryValidateShipPosition(myFleet, out validations))
+            {
+                foreach (var validation in validations)
+                {
+                    Console.WriteLine(validation);
+                }
+            }
+        }
 
       private static void InitializeEnemyFleet()
       {

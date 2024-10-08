@@ -66,10 +66,10 @@ namespace Battleship.GameController
         {
             return new List<Ship>()
                        {
-                           new Ship() { Name = "Aircraft Carrier", Size = 5, Color = Colors.CadetBlue }, 
-                           new Ship() { Name = "Battleship", Size = 4, Color = Colors.Red }, 
-                           new Ship() { Name = "Submarine", Size = 3, Color = Colors.Chartreuse }, 
-                           new Ship() { Name = "Destroyer", Size = 3, Color = Colors.Yellow }, 
+                           new Ship() { Name = "Aircraft Carrier", Size = 5, Color = Colors.CadetBlue },
+                           new Ship() { Name = "Battleship", Size = 4, Color = Colors.Red },
+                           new Ship() { Name = "Submarine", Size = 3, Color = Colors.Chartreuse },
+                           new Ship() { Name = "Destroyer", Size = 3, Color = Colors.Yellow },
                            new Ship() { Name = "Patrol Boat", Size = 2, Color = Colors.Orange }
                        };
         }
@@ -96,5 +96,61 @@ namespace Battleship.GameController
             var position = new Position(letter, number);
             return position;
         }
-     }
+
+        /// <summary>
+        /// Ships must not overlap each other
+        /// </summary>
+        /// <param name="ships"></param>
+        /// <param name="validations"></param>
+        /// <returns></returns>
+        public static bool TryValidateOverlap(List<Ship> ships, out List<string> validations)
+        {
+            bool isValid = false;
+            validations  = new List<string>();
+
+            foreach (var ship in ships)
+            {
+                validations.Add($"{ship.Name} overlaps");
+            }
+
+            return isValid;
+        }
+        /// <summary>
+        /// All ships have the correct size
+        /// </summary>
+        /// <param name="ships"></param>
+        /// <param name="validations"></param>
+        /// <returns></returns>
+        public static bool TryValidateShipSize(List<Ship> ships, out List<string> validations)
+        {
+            bool isValid = false;
+            validations = new List<string>();
+
+            foreach (var ship in ships)
+            {
+                validations.Add($"{ship.Name} has incorrect size. Expected: {ship.Size}");
+            }
+
+            return isValid;
+        }
+        /// <summary>
+        /// All ships have all positions in a horizontal or vertical row, gaps are not allowed
+        /// </summary>
+        /// <param name="ships"></param>
+        /// <param name="validations"></param>
+        /// <returns></returns>
+        public static bool TryValidateShipPosition(List<Ship> ships, out List<string> validations)
+        {
+            bool isValid = false;
+            validations = new List<string>();
+
+            foreach (var ship in ships)
+            {
+                validations.Add($"{ship.Name} has gap or incorrect position.");
+            }
+
+            return isValid;
+        }
+
+    }
 }

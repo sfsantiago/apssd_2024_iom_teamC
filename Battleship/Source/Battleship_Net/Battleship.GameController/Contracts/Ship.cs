@@ -7,6 +7,7 @@ namespace Battleship.GameController.Contracts
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// The ship.
@@ -69,6 +70,24 @@ namespace Battleship.GameController.Contracts
             var letter = (Letters)Enum.Parse(typeof(Letters), input.ToUpper().Substring(0, 1));
             var number = int.Parse(input.Substring(1, 1));
             Positions.Add(new Position { Column = letter, Row = number });
+        }
+
+        public bool TryAddPosition(string input, out List<string> validations)
+        {
+            validations = new List<string>();
+            bool isValid = false;
+
+            try
+            {
+                AddPosition(input); 
+                isValid = true;
+            }
+            catch (Exception ex)
+            {
+                validations.Add("Invalid position for ship.");
+            }
+
+            return isValid;
         }
 
         public bool IsPlaced
