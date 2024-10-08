@@ -168,6 +168,9 @@ namespace Battleship.Ascii
                 }
             }
 
+            //Console.WriteLine("Start Game - Press 0");
+            //Console.WriteLine("Change Ship Position, Press: 1 - Aircraft Carrier, ");
+
             Console.ReadKey();
         }
 

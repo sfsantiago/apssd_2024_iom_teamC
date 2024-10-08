@@ -5,7 +5,7 @@ namespace Battleship.GameController
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Collections.Specialized;
     using Battleship.GameController.Contracts;
 
     /// <summary>
@@ -114,6 +114,8 @@ namespace Battleship.GameController
                 return isValid;
             }
 
+            List<Ship[]> overlappingShips = new List<Ship[]>();
+
             for (int i = 0; i < ships.Count - 1; i++)
             {
                 for (int j = 1; j < ships.Count; j++)
@@ -129,10 +131,17 @@ namespace Battleship.GameController
                     var overlappingShip = shipi.Where(n1 => shipj.Where(n2 => n1.Row == n2.Row && n1.Column == n2.Column).Any()).FirstOrDefault();
                     if (overlappingShip != null)
                     {
-                        validations.Add($"{ships[i].Name} overlaps {ships[j].Name}.");
+                        overlappingShips.Add(new Ship[] { ships[i], ships[j] });
+
+                        bool isValidated = overlappingShips.Where(n => n[0].Name == ships[i].Name && n[0].Name == ships[j].Name || n[0].Name == ships[j].Name && n[1].Name == ships[i].Name).Any();
+                        if(isValidated == false)
+                        {
+                            validations.Add($"{ships[i].Name} and {ships[j].Name} overlapped.");
+                        }
                     }
                 }
             }
+
             isValid = validations.Any() == false;
 
             return isValid;
