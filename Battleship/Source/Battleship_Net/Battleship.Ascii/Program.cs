@@ -181,8 +181,8 @@ namespace Battleship.Ascii
                 Console.WriteLine("All ships are set!");
             }
 
+            Console.WriteLine("Change Ship Position, Press: 1 - Aircraft Carrier, 2 - Battleship, 3 - Submarine, 4 - Destroyer, 5 - Patrol Boat ");
             Console.WriteLine("Start Game - Press 0, Exit Game - Press X");
-            //Console.WriteLine("Change Ship Position, Press: 1 - Aircraft Carrier, 2 - Battleship, 3 - Submarine, 4 - Destroyer, 5 - Patrol Boat ");
 
             string userInput = Console.ReadLine();
             if (userInput == "0")

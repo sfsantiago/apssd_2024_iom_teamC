@@ -160,10 +160,11 @@ namespace Battleship.GameController
             foreach (var ship in ships)
             {
 
-                bool equalSize = ship.Positions.Count == ship.Size;
+                var distinctPositions = ship.Positions.GroupBy(n => new { n.Row, n.Column }).Select(n => n.FirstOrDefault()).ToList();
+                bool equalSize = distinctPositions.Count() == ship.Size;
                 if (equalSize == false)
                 {
-                    validations.Add($"{ship.Name} has incorrect size. Expected: {ship.Size}, Actual: {ship.Positions.Count}");
+                    validations.Add($"{ship.Name} has incorrect size. Expected: {ship.Size}, Actual: {distinctPositions.Count()}");
                 }
             }
             isValid = validations.Any() == false;
