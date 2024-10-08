@@ -108,10 +108,27 @@ namespace Battleship.GameController
             bool isValid = false;
             validations = new List<string>();
 
-            foreach (var ship in ships)
+            if (ships.Count > 1)
             {
-                validations.Add($"{ship.Name} overlaps");
+                isValid = true;
+                return isValid;
             }
+
+            for (int i = 0; i < ships.Count - 1; i++)
+            {
+                for (int j = 1; j < ships.Count; j++)
+                {
+                    var shipi = ships[i].Positions;
+                    var shipj = ships[j].Positions;
+
+                    var overlappingShip = shipi.Where(n1 => shipj.Where(n2 => n1.Row == n2.Row && n1.Column == n2.Column).Any()).FirstOrDefault();
+                    if (overlappingShip != null)
+                    {
+                        validations.Add($"{ships[i].Name} overlaps {ships[j].Name} .");
+                    }
+                }
+            }
+            isValid = validations.Any() == false;
 
             return isValid;
         }
@@ -135,6 +152,7 @@ namespace Battleship.GameController
                     validations.Add($"{ship.Name} has incorrect size. Expected: {ship.Size}, Actual: {ship.Positions.Count}");
                 }
             }
+            isValid = validations.Any() == false;
 
             return isValid;
         }
