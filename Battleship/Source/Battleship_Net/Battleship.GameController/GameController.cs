@@ -106,7 +106,7 @@ namespace Battleship.GameController
         public static bool TryValidateOverlap(List<Ship> ships, out List<string> validations)
         {
             bool isValid = false;
-            validations  = new List<string>();
+            validations = new List<string>();
 
             foreach (var ship in ships)
             {
@@ -130,7 +130,7 @@ namespace Battleship.GameController
             {
 
                 bool equalSize = ship.Positions.Count == ship.Size;
-                if(equalSize == false)
+                if (equalSize == false)
                 {
                     validations.Add($"{ship.Name} has incorrect size. Expected: {ship.Size}, Actual: {ship.Positions.Count}");
                 }
@@ -151,9 +151,57 @@ namespace Battleship.GameController
 
             foreach (var ship in ships)
             {
-                validations.Add($"{ship.Name} has gap or incorrect position.");
+                Position firstPosition = ship.Positions.FirstOrDefault();
+                Position lastPosition = ship.Positions.LastOrDefault();
+
+                if (firstPosition == null)
+                {
+                    validations.Add($"{ship.Name} has no first position.");
+                    break;
+                }
+                if (lastPosition == null)
+                {
+                    validations.Add($"{ship.Name} has no last position.");
+                    break;
+                }
+
+                bool isHorizontal = ship.Positions.All(n => n.Row == firstPosition.Row);
+                bool isVertical = ship.Positions.All(n => n.Column == firstPosition.Column);
+
+                if ((isHorizontal || isVertical) == false)
+                {
+                    validations.Add($"{ship.Name} has incorrect position.");
+                    break;
+                }
+
+                if (isHorizontal)
+                {
+                    int column = (int)firstPosition.Column;
+                    foreach (var pos in ship.Positions.OrderBy(n => (int)n.Column))
+                    {
+                        if ((int)pos.Column != column)
+                        {
+                            validations.Add($"{ship.Name} has horizontal gap in position.");
+                            break;
+                        }
+                    }
+                }
+                if (isVertical)
+                {
+                    int row = firstPosition.Row;
+                    foreach (var pos in ship.Positions.OrderBy(n => n.Row))
+                    {
+                        if (pos.Row != row)
+                        {
+                            validations.Add($"{ship.Name} has vertical gap in position.");
+                            break;
+                        }
+                    }
+                }
             }
 
+
+            isValid = validations.Any() == false;
             return isValid;
         }
 
