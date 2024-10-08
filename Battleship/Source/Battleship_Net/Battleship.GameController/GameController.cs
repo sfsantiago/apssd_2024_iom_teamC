@@ -168,7 +168,7 @@ namespace Battleship.GameController
                 bool isHorizontal = ship.Positions.All(n => n.Row == firstPosition.Row);
                 bool isVertical = ship.Positions.All(n => n.Column == firstPosition.Column);
 
-                if (isHorizontal == false || isVertical == false)
+                if (isHorizontal == false && isVertical == false)
                 {
                     validations.Add($"{ship.Name} has incorrect position.");
                     break;
