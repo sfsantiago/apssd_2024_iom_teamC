@@ -108,7 +108,7 @@ namespace Battleship.GameController
             bool isValid = false;
             validations = new List<string>();
 
-            if (ships.Count > 1)
+            if (ships.Count < 2)
             {
                 isValid = true;
                 return isValid;
@@ -118,13 +118,18 @@ namespace Battleship.GameController
             {
                 for (int j = 1; j < ships.Count; j++)
                 {
+                    if (ships[i].Name == ships[j].Name)
+                    {
+                        continue;
+                    }
+
                     var shipi = ships[i].Positions;
                     var shipj = ships[j].Positions;
 
                     var overlappingShip = shipi.Where(n1 => shipj.Where(n2 => n1.Row == n2.Row && n1.Column == n2.Column).Any()).FirstOrDefault();
                     if (overlappingShip != null)
                     {
-                        validations.Add($"{ships[i].Name} overlaps {ships[j].Name} .");
+                        validations.Add($"{ships[i].Name} overlaps {ships[j].Name}.");
                     }
                 }
             }

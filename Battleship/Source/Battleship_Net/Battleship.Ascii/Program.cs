@@ -146,13 +146,6 @@ namespace Battleship.Ascii
                 }
             }
 
-            if (GameController.TryValidateOverlap(myFleet, out validations) == false)
-            {
-                foreach (var validation in validations)
-                {
-                    Console.WriteLine(validation);
-                }
-            }
             if (GameController.TryValidateShipSize(myFleet, out validations) == false)
             {
                 foreach (var validation in validations)
@@ -161,6 +154,13 @@ namespace Battleship.Ascii
                 }
             }
             if (GameController.TryValidateShipPosition(myFleet, out validations) == false)
+            {
+                foreach (var validation in validations)
+                {
+                    Console.WriteLine(validation);
+                }
+            }
+            if (GameController.TryValidateOverlap(myFleet, out validations) == false)
             {
                 foreach (var validation in validations)
                 {
