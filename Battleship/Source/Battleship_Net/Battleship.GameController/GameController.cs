@@ -184,6 +184,7 @@ namespace Battleship.GameController
                             validations.Add($"{ship.Name} has horizontal gap in position.");
                             break;
                         }
+                        column += 1;
                     }
                 }
                 if (isVertical)
@@ -196,6 +197,7 @@ namespace Battleship.GameController
                             validations.Add($"{ship.Name} has vertical gap in position.");
                             break;
                         }
+                        row += 1;
                     }
                 }
             }
