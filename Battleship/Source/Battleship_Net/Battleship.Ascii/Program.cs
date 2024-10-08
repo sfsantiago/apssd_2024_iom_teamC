@@ -33,7 +33,7 @@ namespace Battleship.Ascii
 
          InitializeGame();
 
-         StartGame();
+         //StartGame();
       }
 
       private static void StartGame()
@@ -117,7 +117,7 @@ namespace Battleship.Ascii
       {
          InitializeMyFleet();
 
-         InitializeEnemyFleet();
+         //InitializeEnemyFleet();
       }
 
         private static void InitializeMyFleet()
@@ -135,41 +135,40 @@ namespace Battleship.Ascii
                 {
                     Console.WriteLine("Enter position {0} of {1} (i.e A3):", i, ship.Size);
                     validations = new List<string>();
-                    if (ship.TryAddPosition(Console.ReadLine(), out validations)) 
+                    if (ship.TryAddPosition(Console.ReadLine(), out validations) == false) 
                     {
                         foreach (var validation in validations)
                         {
                             Console.WriteLine(validation);
                         }
-                    }
-                    else
-                    {
                         i -= 1;
-                    }                
+                    }
                 }
             }
 
-            if (GameController.TryValidateOverlap(myFleet, out validations))
+            if (GameController.TryValidateOverlap(myFleet, out validations) == false)
             {
                 foreach (var validation in validations)
                 {
                     Console.WriteLine(validation);
                 }
             }
-            if (GameController.TryValidateShipSize(myFleet, out validations))
+            if (GameController.TryValidateShipSize(myFleet, out validations) == false)
             {
                 foreach (var validation in validations)
                 {
                     Console.WriteLine(validation);
                 }
             }
-            if (GameController.TryValidateShipPosition(myFleet, out validations))
+            if (GameController.TryValidateShipPosition(myFleet, out validations) == false)
             {
                 foreach (var validation in validations)
                 {
                     Console.WriteLine(validation);
                 }
             }
+
+            Console.ReadKey();
         }
 
       private static void InitializeEnemyFleet()

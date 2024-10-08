@@ -128,7 +128,12 @@ namespace Battleship.GameController
 
             foreach (var ship in ships)
             {
-                validations.Add($"{ship.Name} has incorrect size. Expected: {ship.Size}");
+
+                bool equalSize = ship.Positions.Count == ship.Size;
+                if(equalSize == false)
+                {
+                    validations.Add($"{ship.Name} has incorrect size. Expected: {ship.Size}, Actual: {ship.Positions.Count}");
+                }
             }
 
             return isValid;

@@ -60,7 +60,7 @@ namespace Battleship.GameController.Contracts
         /// <param name="input">
         /// The input.
         /// </param>
-        public void AddPosition(string input)
+        private void AddPosition(string input)
         {
             if (Positions == null)
             {
