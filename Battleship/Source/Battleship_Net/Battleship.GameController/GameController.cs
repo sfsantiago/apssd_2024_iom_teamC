@@ -203,7 +203,7 @@ namespace Battleship.GameController
                 if (isHorizontal == false && isVertical == false)
                 {
                     validations.Add($"{ship.Name} has incorrect position.");
-                    break;
+                    continue;
                 }
 
                 if (isHorizontal)
