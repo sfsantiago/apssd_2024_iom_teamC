@@ -183,7 +183,7 @@ namespace Battleship.Ascii
                     Console.WriteLine($"{ship.Name} at position {String.Join(", ", ship.Positions.Select(n => n.ToString() + (n.IsHit ? "(hit)" : "")))}");
                 }
                 Console.WriteLine();
-                Console.WriteLine($"Computers's targeted positions: {String.Join(", ", computerTargetPositions.Select(n => n.ToString()))}");
+                Console.WriteLine($"Computer's targeted positions: {String.Join(", ", computerTargetPositions.Select(n => n.ToString()))}");
 
 
             nextUserInput:
