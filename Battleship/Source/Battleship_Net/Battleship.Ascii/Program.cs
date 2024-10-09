@@ -29,7 +29,7 @@ namespace Battleship.Ascii
             Console.WriteLine(@" __..._____--==/___]_|__|_____________________________[___\==--____,------' .7");
             Console.WriteLine(@"|                        Welcome to Battleship                         BB-61/");
             Console.Write(@"\                      ");
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("BRP ASIM KILIG - CNIGANG");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("                            |");
