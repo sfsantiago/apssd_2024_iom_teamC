@@ -91,7 +91,7 @@ namespace Battleship.Ascii
                     Console.WriteLine(@"                 -\  \     /  /-");
                     Console.WriteLine(@"                   \  \   /  /");
                     Divider();
-                    DisplayHitShip(enemyFleet);
+                    DisplayHitShip(enemyFleet, ConsoleColor.Green);
                 }
 
                 Console.WriteLine(isHit ? "Yeah ! Nice hit !" : "Miss");
@@ -113,7 +113,7 @@ namespace Battleship.Ascii
                     Console.WriteLine(@"                 -\  \     /  /-");
                     Console.WriteLine(@"                   \  \   /  /");
                     Divider();
-                    DisplayHitShip(myFleet);
+                    DisplayHitShip(myFleet, ConsoleColor.Red);
                 }
 
                 
@@ -325,12 +325,12 @@ namespace Battleship.Ascii
             Console.WriteLine(new String('*', 50));
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static void DisplayHitShip(IEnumerable<Ship> ships)
+        static void DisplayHitShip(IEnumerable<Ship> ships, ConsoleColor consoleColor)
         {
             var hitShips = ships.Where(n => n.IsLastHit == true);
             if (hitShips.Any())
             {
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = consoleColor;
                 var ship = hitShips.FirstOrDefault();
                 Console.Write($"{ship.Name} is hit ");
                 if (ship.LastHitPosition != null)
