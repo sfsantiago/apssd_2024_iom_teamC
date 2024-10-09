@@ -79,6 +79,7 @@ namespace Battleship.GameController.Contracts
 
             try
             {
+                Position.ParsePosition(input);
                 AddPosition(input);
                 isValid = true;
             }

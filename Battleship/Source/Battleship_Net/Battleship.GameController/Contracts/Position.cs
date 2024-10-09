@@ -1,4 +1,6 @@
-﻿namespace Battleship.GameController.Contracts
+﻿using System;
+
+namespace Battleship.GameController.Contracts
 {
     /// <summary>
     ///     The position.
@@ -74,6 +76,32 @@
         public override string ToString()
         {
             return string.Concat(Column.ToString(), Row.ToString());
+        }
+
+        public static Position ParsePosition(string input)
+        {
+            Letters letter;
+            int number;
+            try
+            {
+                letter = (Letters)Enum.Parse(typeof(Letters), input.ToUpper().Substring(0, 1));
+                number = int.Parse(input.Substring(1));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Invalid Position.");
+            }
+
+            if ((int)letter < 1 || (int)letter > 8)
+            {
+                throw new Exception("Invalid Position.");
+            }
+            if (number < 1 || number > 8)
+            {
+                throw new Exception("Invalid Position.");
+            }
+
+            return new Position(letter, number);
         }
     }
 }

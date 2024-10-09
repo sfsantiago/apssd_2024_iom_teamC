@@ -70,7 +70,7 @@ namespace Battleship.Ascii
             do
             {
                 List<string> validations = new List<string>();
-                List<string> 
+                //List<string> 
 
                 Console.WriteLine();
                 Console.WriteLine("Player, it's your turn");
@@ -190,38 +190,12 @@ namespace Battleship.Ascii
             return playAgain;
         }
 
-        internal static Position ParsePosition(string input)
-        {
-            Letters letter;
-            int number;
-            try
-            {
-                letter = (Letters)Enum.Parse(typeof(Letters), input.ToUpper().Substring(0, 1));
-                number = int.Parse(input.Substring(1));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Invalid Position.");
-            }
-
-            if ((int)letter < 1 || (int)letter > 8)
-            {
-                throw new Exception("Invalid Position.");
-            }
-            if (number < 1 || number > 8)
-            {
-                throw new Exception("Invalid Position.");
-            }
-
-            return new Position(letter, number);
-        }
-
         internal static Position TryParsePosition(string input, out List<string> validations)
         {
             validations = new List<string>();
             try
             {
-                return ParsePosition(input);
+                return Position.ParsePosition(input);
             }
             catch (Exception ex)
             {
