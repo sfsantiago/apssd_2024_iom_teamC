@@ -70,6 +70,7 @@ namespace Battleship.Ascii
             do
             {
                 List<string> validations = new List<string>();
+                List<string> 
 
                 Console.WriteLine();
                 Console.WriteLine("Player, it's your turn");
@@ -205,12 +206,13 @@ namespace Battleship.Ascii
 
             if ((int)letter < 1 || (int)letter > 8)
             {
-                throw new Exception("Invalid Column");
+                throw new Exception("Invalid Position.");
             }
             if (number < 1 || number > 8)
             {
-                throw new Exception("Invalid Row");
+                throw new Exception("Invalid Position.");
             }
+
             return new Position(letter, number);
         }
 
