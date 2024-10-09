@@ -132,6 +132,8 @@ namespace Battleship.Ascii
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Enemy defeated!");
                     Console.WriteLine("Player win!");
+                    Console.ForegroundColor = ConsoleColor.White;
+
                     hasWinner = true;
                 }
                 else if (myFleet.All(n => n.Sunk))
@@ -143,6 +145,7 @@ namespace Battleship.Ascii
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("You are defeated!");
                     Console.WriteLine("Computer win!");
+                    Console.ForegroundColor = ConsoleColor.White;
 
                     hasWinner = true;
                 }
@@ -151,6 +154,18 @@ namespace Battleship.Ascii
 
             if (hasWinner)
             {
+                Console.WriteLine("Player's ships");
+                foreach (var ship in myFleet)
+                {
+                    Console.WriteLine($"{ship.Name} at position {String.Join(", ", ship.Positions.Select(n => n.ToString() + (n.IsHit ? "(hit)" : "")))}");
+                }
+                Console.WriteLine("Computer's ships");
+                foreach (var ship in enemyFleet)
+                {
+                    Console.WriteLine($"{ship.Name} at position {String.Join(", ", ship.Positions.Select(n => n.ToString() + (n.IsHit ? "(hit)" : "")))}");
+                }
+
+
             nextUserInput:
                 Console.WriteLine("[Y] Play Again?");
                 Console.WriteLine("[N] Exit Game");
@@ -299,7 +314,7 @@ namespace Battleship.Ascii
             Console.WriteLine("[5] Patrol Boat");
 
             Console.WriteLine("");
-            if (validations.Any() == false)
+            if (allValidations.Any() == false)
             {
                 Console.WriteLine("[Y] Start Game");
             }
@@ -313,7 +328,7 @@ namespace Battleship.Ascii
 
             if (String.Equals(userInput, "Y", StringComparison.OrdinalIgnoreCase))
             {
-                if (validations.Any())
+                if (allValidations.Any())
                 {
                     goto nextUserInput;
                 }
