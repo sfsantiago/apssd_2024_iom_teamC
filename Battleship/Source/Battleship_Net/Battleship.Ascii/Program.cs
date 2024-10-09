@@ -17,6 +17,7 @@ namespace Battleship.Ascii
         static void Main()
         {
         setUpGame:
+            Console.Clear();
             Console.WriteLine("                                     |__");
             Console.WriteLine(@"                                     |\/");
             Console.WriteLine("                                     ---");
