@@ -63,10 +63,10 @@ namespace Battleship.Ascii
 
                 Console.WriteLine();
                 Console.WriteLine("Player, it's your turn");
-                addCoordinate:
+            addCoordinate:
                 Console.WriteLine("Enter coordinates for your shot :");
                 var position = TryParsePosition(Console.ReadLine(), out validations);
-                if(position == null)
+                if (position == null)
                 {
                     foreach (var item in validations)
                     {
@@ -161,9 +161,17 @@ namespace Battleship.Ascii
 
             Console.WriteLine("Please position your fleet (Game board size is from A to H and 1 to 8) :");
 
-            setUpShip:
+            string shipName = string.Empty;
+            Dictionary<int, string> ships = new Dictionary<int, string>();
+            ships.Add(1, "Aircraft Carrier");
+            ships.Add(2, "Battleship");
+            ships.Add(3, "Submarine");
+            ships.Add(4, "Destroyer");
+            ships.Add(5, "Patrol Boat");
+
+        setUpShip:
             List<string> validations = new List<string>();
-            foreach (var ship in myFleet)
+            foreach (var ship in myFleet.Where(n => String.IsNullOrWhiteSpace(shipName) || String.Equals(n.Name, shipName, StringComparison.OrdinalIgnoreCase)))
             {
                 Console.WriteLine();
                 Console.WriteLine("Please enter the positions for the {0} (size: {1})", ship.Name, ship.Size);
@@ -210,12 +218,19 @@ namespace Battleship.Ascii
 
             if (allValidations.Any() == false)
             {
+                Divider();
+                foreach (var item in myFleet)
+                {
+                    Console.WriteLine($"{item.Name}, ready!");
+                }
+                Console.WriteLine();
                 Console.WriteLine("All ships are set!");
+                Divider();
             }
 
 
-            nextUserInput:
-            Console.WriteLine("");
+        nextUserInput:
+            Divider();
 
             Console.WriteLine("Change Ship Position:");
             Console.WriteLine("[1] Aircraft Carrier");
@@ -228,10 +243,12 @@ namespace Battleship.Ascii
             Console.WriteLine("[Y] Start Game");
             Console.WriteLine("[N] Exit Game");
 
+            Divider();
+
             string userInput = Console.ReadLine();
             int shipNumber = -1;
             int.TryParse(userInput, out shipNumber);
-            
+
             if (String.Equals(userInput, "Y", StringComparison.OrdinalIgnoreCase))
             {
                 continueGame = true;
@@ -240,8 +257,14 @@ namespace Battleship.Ascii
             {
                 continueGame = false;
             }
-            else if (new[] {1,2,3,4,5}.Contains(shipNumber))
+            else if (ships.Select(n => n.Key).Contains(shipNumber))
             {
+                shipName = ships.Where(n => n.Key == shipNumber).Select(n => n.Value).FirstOrDefault();
+                foreach (var item in myFleet.Where(n => n.Name == shipName))
+                {
+                    item.Positions.Clear();
+                }
+
                 goto setUpShip;
             }
             else
@@ -277,6 +300,14 @@ namespace Battleship.Ascii
 
             enemyFleet[4].Positions.Add(new Position { Column = Letters.C, Row = 5 });
             enemyFleet[4].Positions.Add(new Position { Column = Letters.C, Row = 6 });
+        }
+
+        static void Divider() 
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(new String('*', 50));
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
