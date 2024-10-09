@@ -184,6 +184,7 @@ namespace Battleship.Ascii
 
 
             nextUserInput:
+            Console.WriteLine("");
 
             Console.WriteLine("Change Ship Position:");
             Console.WriteLine("[1] Aircraft Carrier");
