@@ -67,16 +67,22 @@ namespace Battleship.Ascii
             bool hasWinner = false;
             bool playAgain = false;
 
+            List<string> playerTargetPositions = new List<string>();
+            List<string> computerTargetPositions = new List<string>();
+
             do
             {
                 List<string> validations = new List<string>();
-                //List<string> 
+                string playerInput = String.Empty;
 
                 Console.WriteLine();
                 Console.WriteLine("Player, it's your turn");
             addCoordinate:
                 Console.WriteLine("Enter coordinates for your shot :");
-                var position = TryParsePosition(Console.ReadLine(), out validations);
+                playerInput = Console.ReadLine();
+                playerTargetPositions.Add(playerInput);
+
+                var position = TryParsePosition(playerInput, out validations);
                 if (position == null)
                 {
                     foreach (var item in validations)
@@ -106,6 +112,8 @@ namespace Battleship.Ascii
                 Console.WriteLine(isHit ? "Yeah ! Nice hit !" : "Miss");
 
                 position = GetRandomPosition();
+                computerTargetPositions.Add(position.ToString());
+
                 isHit = GameController.CheckIsHit(myFleet, position);
                 Console.WriteLine();
                 Console.WriteLine("Computer shot in {0}{1} and {2}", position.Column, position.Row, isHit ? "has hit your ship !" : "miss");
@@ -165,11 +173,17 @@ namespace Battleship.Ascii
                 {
                     Console.WriteLine($"{ship.Name} at position {String.Join(", ", ship.Positions.Select(n => n.ToString() + (n.IsHit ? "(hit)" : "")))}");
                 }
+                Console.WriteLine();
+                Console.WriteLine($"Player's targeted positions: {String.Join(", ", playerTargetPositions.Select(n => n.ToString()))}");
+
+                Console.WriteLine();
                 Console.WriteLine("Computer's ships");
                 foreach (var ship in enemyFleet)
                 {
                     Console.WriteLine($"{ship.Name} at position {String.Join(", ", ship.Positions.Select(n => n.ToString() + (n.IsHit ? "(hit)" : "")))}");
                 }
+                Console.WriteLine();
+                Console.WriteLine($"Computers's targeted positions: {String.Join(", ", computerTargetPositions.Select(n => n.ToString()))}");
 
 
             nextUserInput:
