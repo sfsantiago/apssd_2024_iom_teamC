@@ -56,7 +56,7 @@ namespace Battleship.GameController
                 {
                     if (position.Equals(shot))
                     {
-                        shot.IsHit = true;
+                        position.IsHit = true;
                         ship.IsLastHit = true;
                         ship.LastHitPosition = position;
                         return true;
