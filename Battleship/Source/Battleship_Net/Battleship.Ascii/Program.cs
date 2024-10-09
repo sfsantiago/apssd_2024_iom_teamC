@@ -131,6 +131,7 @@ namespace Battleship.Ascii
                     }
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Enemy defeated!");
+                    Console.WriteLine("Player win!");
                     hasWinner = true;
                 }
                 else if (myFleet.All(n => n.Sunk))
@@ -141,6 +142,8 @@ namespace Battleship.Ascii
                     }
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("You are defeated!");
+                    Console.WriteLine("Computer win!");
+
                     hasWinner = true;
                 }
             }
