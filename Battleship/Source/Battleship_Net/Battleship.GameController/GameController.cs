@@ -34,12 +34,14 @@ namespace Battleship.GameController
         {
             if (ships == null)
             {
-                throw new ArgumentNullException("ships");
+                //throw new ArgumentNullException("ships");
+                return false;
             }
 
             if (shot == null)
             {
-                throw new ArgumentNullException("shot");
+                //throw new ArgumentNullException("shot");
+                return false;
             }
 
             foreach (var ship in ships)

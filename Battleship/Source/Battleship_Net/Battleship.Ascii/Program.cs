@@ -54,10 +54,22 @@ namespace Battleship.Ascii
 
             do
             {
+                List<string> validations = new List<string>();
+
                 Console.WriteLine();
                 Console.WriteLine("Player, it's your turn");
+                addCoordinate:
                 Console.WriteLine("Enter coordinates for your shot :");
-                var position = ParsePosition(Console.ReadLine());
+                var position = TryParsePosition(Console.ReadLine(), out validations);
+                if(position == null)
+                {
+                    foreach (var item in validations)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    validations.Clear();
+                    goto addCoordinate;
+                }
                 var isHit = GameController.CheckIsHit(enemyFleet, position);
                 if (isHit)
                 {
@@ -102,6 +114,20 @@ namespace Battleship.Ascii
             var letter = (Letters)Enum.Parse(typeof(Letters), input.ToUpper().Substring(0, 1));
             var number = int.Parse(input.Substring(1, 1));
             return new Position(letter, number);
+        }
+
+        internal static Position TryParsePosition(string input, out List<string> validations)
+        {
+            validations = new List<string>();
+            try
+            {
+                return ParsePosition(input);
+            }
+            catch (Exception ex)
+            {
+                validations.Add("Invalid Position.");
+                return null;
+            }
         }
 
         private static Position GetRandomPosition()
