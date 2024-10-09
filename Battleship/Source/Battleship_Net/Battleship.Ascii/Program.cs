@@ -130,6 +130,7 @@ namespace Battleship.Ascii
 
             Console.WriteLine("Please position your fleet (Game board size is from A to H and 1 to 8) :");
 
+            setUpShip:
             List<string> validations = new List<string>();
             foreach (var ship in myFleet)
             {
@@ -181,17 +182,39 @@ namespace Battleship.Ascii
                 Console.WriteLine("All ships are set!");
             }
 
-            Console.WriteLine("Change Ship Position, Press: 1 - Aircraft Carrier, 2 - Battleship, 3 - Submarine, 4 - Destroyer, 5 - Patrol Boat ");
-            Console.WriteLine("Start Game - Press 0, Exit Game - Press X");
+
+            nextUserInput:
+
+            Console.WriteLine("Change Ship Position:");
+            Console.WriteLine("[1] Aircraft Carrier");
+            Console.WriteLine("[2] Battleship");
+            Console.WriteLine("[3] Submarine");
+            Console.WriteLine("[4] Destroyer");
+            Console.WriteLine("[5] Patrol Boat");
+
+            Console.WriteLine("");
+            Console.WriteLine("[Y] Start Game");
+            Console.WriteLine("[N] Exit Game");
 
             string userInput = Console.ReadLine();
-            if (userInput == "0")
+            int shipNumber = -1;
+            int.TryParse(userInput, out shipNumber);
+            
+            if (String.Equals(userInput, "Y", StringComparison.OrdinalIgnoreCase))
             {
                 continueGame = true;
             }
-            else if (String.Equals(userInput, "X", StringComparison.OrdinalIgnoreCase))
+            else if (String.Equals(userInput, "N", StringComparison.OrdinalIgnoreCase))
             {
                 continueGame = false;
+            }
+            else if (new[] {1,2,3,4,5}.Contains(shipNumber))
+            {
+                goto setUpShip;
+            }
+            else
+            {
+                goto nextUserInput;
             }
 
             return continueGame;
