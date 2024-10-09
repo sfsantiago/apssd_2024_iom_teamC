@@ -190,8 +190,26 @@ namespace Battleship.Ascii
 
         internal static Position ParsePosition(string input)
         {
-            var letter = (Letters)Enum.Parse(typeof(Letters), input.ToUpper().Substring(0, 1));
-            var number = int.Parse(input.Substring(1, 1));
+            Letters letter;
+            int number;
+            try
+            {
+                letter = (Letters)Enum.Parse(typeof(Letters), input.ToUpper().Substring(0, 1));
+                number = int.Parse(input.Substring(1));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Invalid Position.");
+            }
+
+            if ((int)letter < 1 || (int)letter > 8)
+            {
+                throw new Exception("Invalid Column");
+            }
+            if (number < 1 || number > 8)
+            {
+                throw new Exception("Invalid Row");
+            }
             return new Position(letter, number);
         }
 
@@ -204,7 +222,7 @@ namespace Battleship.Ascii
             }
             catch (Exception ex)
             {
-                validations.Add("Invalid Position.");
+                validations.Add(ex.Message);
                 return null;
             }
         }
