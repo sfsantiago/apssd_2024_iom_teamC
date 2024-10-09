@@ -332,11 +332,12 @@ namespace Battleship.Ascii
             {
                 Console.ForegroundColor = consoleColor;
                 var ship = hitShips.FirstOrDefault();
-                Console.Write($"{ship.Name} is hit ");
+                Console.Write($"{ship.Name} is hit");
                 if (ship.LastHitPosition != null)
                 {
                     Console.WriteLine($"at position {ship.LastHitPosition.ToString()}.");
                 }
+                Console.WriteLine($"{ship.Positions.Where(n => n.IsHit).Count()} of {ship.Positions.Count()}");
                 if (ship.Sunk)
                 {
                     Console.WriteLine($"{ship.Name} sunk!");
