@@ -16,6 +16,7 @@ namespace Battleship.Ascii
 
         static void Main()
         {
+        setUpGame:
             Console.WriteLine("                                     |__");
             Console.WriteLine(@"                                     |\/");
             Console.WriteLine("                                     ---");
@@ -37,13 +38,18 @@ namespace Battleship.Ascii
             Console.WriteLine();
 
             bool continueGame = InitializeGame();
+            bool playAgain = false;
             if (continueGame)
             {
-                StartGame();
+                playAgain = StartGame();
+            }
+            if (playAgain)
+            {
+                goto setUpGame;
             }
         }
 
-        private static void StartGame()
+        private static bool StartGame()
         {
             Console.Clear();
             Console.WriteLine("                  __");
@@ -58,6 +64,7 @@ namespace Battleship.Ascii
             Console.WriteLine(@"    """"""""");
 
             bool hasWinner = false;
+            bool playAgain = false;
 
             do
             {
@@ -116,11 +123,51 @@ namespace Battleship.Ascii
                     DisplayHitShip(myFleet, ConsoleColor.Red);
                 }
 
-                
+                if (enemyFleet.All(n => n.Sunk))
+                {
+                    foreach (var ship in enemyFleet.Where(n => n.Sunk))
+                    {
+                        Console.WriteLine($"{ship.Name} sunk!");
+                    }
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Enemy defeated!");
+                    hasWinner = true;
+                }
+                else if (myFleet.All(n => n.Sunk))
+                {
+                    foreach (var ship in enemyFleet.Where(n => n.Sunk))
+                    {
+                        Console.WriteLine($"{ship.Name} sunk!");
+                    }
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("You are defeated!");
+                    hasWinner = true;
+                }
             }
             while (hasWinner == false);
 
-            Console.ReadKey();
+            if (hasWinner)
+            {
+            nextUserInput:
+                Console.WriteLine("[Y] Play Again?");
+                Console.WriteLine("[N] Exit Game");
+
+                string userInput = Console.ReadLine();
+                if (String.Equals(userInput, "Y", StringComparison.OrdinalIgnoreCase))
+                {
+                    playAgain = true;
+                }
+                else if (String.Equals(userInput, "N", StringComparison.OrdinalIgnoreCase))
+                {
+                    playAgain = false;
+                }
+                else
+                {
+                    goto nextUserInput;
+                }
+            }
+
+            return playAgain;
         }
 
         internal static Position ParsePosition(string input)
