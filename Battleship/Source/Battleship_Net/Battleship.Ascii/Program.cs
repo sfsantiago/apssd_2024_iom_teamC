@@ -127,6 +127,7 @@ namespace Battleship.Ascii
 
                 if (enemyFleet.All(n => n.Sunk))
                 {
+                    Console.WriteLine();
                     foreach (var ship in enemyFleet.Where(n => n.Sunk))
                     {
                         Console.WriteLine($"{ship.Name} sunk!");
@@ -140,6 +141,7 @@ namespace Battleship.Ascii
                 }
                 else if (myFleet.All(n => n.Sunk))
                 {
+                    Console.WriteLine();
                     foreach (var ship in enemyFleet.Where(n => n.Sunk))
                     {
                         Console.WriteLine($"{ship.Name} sunk!");
@@ -156,6 +158,8 @@ namespace Battleship.Ascii
 
             if (hasWinner)
             {
+                Console.WriteLine();
+                Console.WriteLine();
                 Console.WriteLine("Player's ships");
                 foreach (var ship in myFleet)
                 {
@@ -169,8 +173,12 @@ namespace Battleship.Ascii
 
 
             nextUserInput:
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("[Y] Play Again?");
                 Console.WriteLine("[N] Exit Game");
+                Console.ForegroundColor = ConsoleColor.White;
 
                 string userInput = Console.ReadLine();
                 if (String.Equals(userInput, "Y", StringComparison.OrdinalIgnoreCase))
@@ -309,11 +317,13 @@ namespace Battleship.Ascii
             Console.WriteLine("[5] Patrol Boat");
 
             Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             if (allValidations.Any() == false)
             {
                 Console.WriteLine("[Y] Start Game");
             }
             Console.WriteLine("[N] Exit Game");
+            Console.ForegroundColor = ConsoleColor.White;
 
             Divider();
 
