@@ -68,5 +68,12 @@
         }
 
         #endregion
+
+        public bool IsHit { get; set; }
+
+        public override string ToString()
+        {
+            return string.Concat(Column.ToString(), Row.ToString());
+        }
     }
 }

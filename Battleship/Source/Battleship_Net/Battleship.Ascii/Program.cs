@@ -57,6 +57,8 @@ namespace Battleship.Ascii
             Console.WriteLine(@"   \    \_/");
             Console.WriteLine(@"    """"""""");
 
+            bool hasWinner = false;
+
             do
             {
                 List<string> validations = new List<string>();
@@ -88,6 +90,8 @@ namespace Battleship.Ascii
                     Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
                     Console.WriteLine(@"                 -\  \     /  /-");
                     Console.WriteLine(@"                   \  \   /  /");
+                    Divider();
+                    DisplayHitShip(enemyFleet);
                 }
 
                 Console.WriteLine(isHit ? "Yeah ! Nice hit !" : "Miss");
@@ -108,10 +112,15 @@ namespace Battleship.Ascii
                     Console.WriteLine(@"            -   (\- |  \ /  |  /)  -");
                     Console.WriteLine(@"                 -\  \     /  /-");
                     Console.WriteLine(@"                   \  \   /  /");
-
+                    Divider();
+                    DisplayHitShip(myFleet);
                 }
+
+                
             }
-            while (true);
+            while (hasWinner == false);
+
+            Console.ReadKey();
         }
 
         internal static Position ParsePosition(string input)
@@ -240,7 +249,10 @@ namespace Battleship.Ascii
             Console.WriteLine("[5] Patrol Boat");
 
             Console.WriteLine("");
-            Console.WriteLine("[Y] Start Game");
+            if (validations.Any() == false)
+            {
+                Console.WriteLine("[Y] Start Game");
+            }
             Console.WriteLine("[N] Exit Game");
 
             Divider();
@@ -251,6 +263,10 @@ namespace Battleship.Ascii
 
             if (String.Equals(userInput, "Y", StringComparison.OrdinalIgnoreCase))
             {
+                if (validations.Any())
+                {
+                    goto nextUserInput;
+                }
                 continueGame = true;
             }
             else if (String.Equals(userInput, "N", StringComparison.OrdinalIgnoreCase))
@@ -302,12 +318,31 @@ namespace Battleship.Ascii
             enemyFleet[4].Positions.Add(new Position { Column = Letters.C, Row = 6 });
         }
 
-        static void Divider() 
+        static void Divider()
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(new String('*', 50));
             Console.ForegroundColor = ConsoleColor.White;
+        }
+        static void DisplayHitShip(IEnumerable<Ship> ships)
+        {
+            var hitShips = ships.Where(n => n.IsLastHit == true);
+            if (hitShips.Any())
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                var ship = hitShips.FirstOrDefault();
+                Console.Write($"{ship.Name} is hit ");
+                if (ship.LastHitPosition != null)
+                {
+                    Console.WriteLine($"at position {ship.LastHitPosition.ToString()}.");
+                }
+                if (ship.Sunk)
+                {
+                    Console.WriteLine($"{ship.Name} sunk!");
+                }
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
     }
 }

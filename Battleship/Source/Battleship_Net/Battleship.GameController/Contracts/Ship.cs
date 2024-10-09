@@ -12,7 +12,7 @@ namespace Battleship.GameController.Contracts
     /// <summary>
     /// The ship.
     /// </summary>
-    public class Ship: INotifyPropertyChanged
+    public class Ship : INotifyPropertyChanged
     {
         private bool isPlaced;
 
@@ -79,7 +79,7 @@ namespace Battleship.GameController.Contracts
 
             try
             {
-                AddPosition(input); 
+                AddPosition(input);
                 isValid = true;
             }
             catch (Exception ex)
@@ -111,5 +111,16 @@ namespace Battleship.GameController.Contracts
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public bool IsLastHit { get; set; }
+        public Position LastHitPosition { get; internal set; }
+        public bool Sunk
+        {
+            get
+            {
+                return Positions.All(n => n.IsHit);
+            }
+        }
+
     }
 }

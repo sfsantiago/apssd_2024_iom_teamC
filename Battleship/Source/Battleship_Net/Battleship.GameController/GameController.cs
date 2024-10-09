@@ -43,6 +43,12 @@ namespace Battleship.GameController
                 //throw new ArgumentNullException("shot");
                 return false;
             }
+            
+            foreach (var ship in ships)
+            {
+                ship.IsLastHit = false;
+                ship.LastHitPosition = null;            
+            }
 
             foreach (var ship in ships)
             {
@@ -50,6 +56,9 @@ namespace Battleship.GameController
                 {
                     if (position.Equals(shot))
                     {
+                        shot.IsHit = true;
+                        ship.IsLastHit = true;
+                        ship.LastHitPosition = position;
                         return true;
                     }
                 }
